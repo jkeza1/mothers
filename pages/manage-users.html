@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gray-800 text-white h-screen fixed">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-green-500">Smeef</h2>
+                <p class="text-sm text-gray-300">Admin Dashboard</p>
+            </div>
+            <nav class="mt-6">
+                <ul>
+                    <li class="p-4 hover:bg-gray-700">
+                        <a href="#" onclick="loadContent('dashboard')" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 3a1 1 0 00-1 1v4H5a1 1 0 100 2h4v4a1 1 0 002 0v-4h4a1 1 0 100-2h-4V4a1 1 0 00-1-1z" />
+                            </svg>
+                            <span class="ml-4">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700">
+                        <a href="#" onclick="loadContent('manage-users')" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M3 3a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm7 7H6a1 1 0 100 2h4a1 1 0 100-2zm2-4H6a1 1 0 100 2h6a1 1 0 100-2z" />
+                            </svg>
+                            <span class="ml-4">Manage Users</span>
+                        </a>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700">
+                        <a href="../pages/manage-courses.html" onclick="loadContent('manage-courses')" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6z" />
+                            </svg>
+                            <span class="ml-4">Manage Courses</span>
+                        </a>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700">
+                        <a href="../pages/announcements.html" onclick="loadContent('announcements')" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M18 8a6 6 0 01-12 0 6 6 0 1112 0zm-6 8a8 8 0 100-16 8 8 0 000 16z" />
+                            </svg>
+                            <span class="ml-4">Announcements</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 p-8" id="main-content">
+            <header class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Welcome, Admin</h1>
+                <p class="text-gray-600">Manage users, courses, and platform updates.</p>
+            </header>
+        </main>
+    </div>
+
+    <!-- JavaScript to Dynamically Load Content -->
+    <script>
+        function loadContent(page) {
+            const content = {
+                "dashboard": `
+                    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+                    <p class="text-gray-600">Welcome to the admin dashboard.</p>`,
+
+                "manage-users": `
+                    <header class="mb-6">
+                        <h1 class="text-3xl font-bold text-gray-800">Manage Users</h1>
+                        <p class="text-gray-600">Add, edit, or deactivate user accounts.</p>
+                    </header>
+                    <div class="flex justify-between items-center mb-6">
+                        <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="showAddUserForm()">Add New User</button>
+                    </div>
+                    <table class="min-w-full bg-white rounded-md shadow-md">
+                        <thead class="bg-gray-200 text-gray-700">
+                            <tr>
+                                <th class="py-2 px-4 text-left">Name</th>
+                                <th class="py-2 px-4 text-left">Email</th>
+                                <th class="py-2 px-4 text-left">Role</th>
+                                <th class="py-2 px-4 text-left">Status</th>
+                                <th class="py-2 px-4 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table">
+                            <tr class="border-t">
+                                <td class="py-2 px-4">Joan keza</td>
+                                <td class="py-2 px-4">joan@gmail.com</td>
+                                <td class="py-2 px-4">Mentor</td>
+                                <td class="py-2 px-4 text-green-500">Active</td>
+                                <td class="py-2 px-4 text-center">
+                                    <button class="text-blue-500 hover:underline" onclick="editUser(this)">Edit</button> |
+                                    <button class="text-red-500 hover:underline" onclick="deactivateUser(this)">Deactivate</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="add-user-form" class="hidden bg-white p-6 rounded-md shadow-md mt-6">
+                        <h2 class="text-2xl font-bold mb-4">Add New User</h2>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" id="new-user-name" class="mt-1 p-2 border rounded-md w-full">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="new-user-email" class="mt-1 p-2 border rounded-md w-full">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Role</label>
+                            <select id="new-user-role" class="mt-1 p-2 border rounded-md w-full">
+                                <option value="Admin">Admin</option>
+                                <option value="Mentor">Mentor</option>
+                                <option value="User">single-mother</option>
+                            </select>
+                        </div>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="addUser()">Save</button>
+                    </div>`,
+
+                "manage-courses": `
+                    <h1 class="text-3xl font-bold text-gray-800">Manage Courses</h1>
+                    <p class="text-gray-600">Add, update, or remove courses on the platform.</p>`,
+
+                "announcements": `
+                    <h1 class="text-3xl font-bold text-gray-800">Announcements</h1>
+                    <p class="text-gray-600">Post, edit, or delete announcements for users.</p>`
+            };
+
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = content[page] || '<p>Page not found.</p>';
+        }
+
+        function showAddUserForm() {
+            const form = document.getElementById("add-user-form");
+            form.classList.toggle("hidden");
+        }
+
+        function addUser() {
+            const name = document.getElementById("new-user-name").value;
+            const email = document.getElementById("new-user-email").value;
+            const role = document.getElementById("new-user-role").value;
+
+            if (name && email && role) {
+                const table = document.getElementById("user-table");
+                const row = document.createElement("tr");
+                row.className = "border-t";
+                row.innerHTML = `
+                    <td class="py-2 px-4">${name}</td>
+                    <td class="py-2 px-4">${email}</td>
+                    <td class="py-2 px-4">${role}</td>
+                    <td class="py-2 px-4 text-green-500">Active</td>
+                    <td class="py-2 px-4 text-center">
+                        <button class="text-blue-500 hover:underline" onclick="editUser(this)">Edit</button> |
+                        <button class="text-red-500 hover:underline" onclick="deactivateUser(this)">Deactivate</button>
+                    </td>`;
+                table.appendChild(row);
+
+                alert("User added successfully!");
+                showAddUserForm();
+            } else {
+                alert("Please fill out all fields.");
+            }
+        }
+
+        function editUser(button) {
+            const row = button.closest("tr");
+            const name = row.children[0].textContent;
+            const email = row.children[1].textContent;
+            const role = row.children[2].textContent;
+            const status = row.children[3].textContent;
+
+            const editFormHtml = `
+                <div id="edit-user-form" class="bg-white p-6 rounded-md shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Edit User: ${name}</h2>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="edit-user-email" class="mt-1 p-2 border rounded-md w-full" value="${email}">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Role</label>
+                        <select id="edit-user-role" class="mt-1 p-2 border rounded-md w-full">
+                            <option value="Admin" ${role === "Admin" ? "selected" : ""}>Admin</option>
+                            <option value="Mentor" ${role === "Mentor" ? "selected" : ""}>Mentor</option>
+                            <option value="User" ${role === "User" ? "selected" : ""}>User</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Status</label>
+                        <select id="edit-user-status" class="mt-1 p-2 border rounded-md w-full">
+                            <option value="Active" ${status === "Active" ? "selected" : ""}>Active</option>
+                            <option value="Deactivated" ${status === "Deactivated" ? "selected" : ""}>Deactivated</option>
+                        </select>
+                    </div>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="saveEditUser(this, '${name}', '${row.rowIndex}')">Save</button>
+                    <button class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" onclick="closeEditForm()">Cancel</button>
+                </div>
+            `;
+
+            document.getElementById("main-content").insertAdjacentHTML("beforeend", editFormHtml);
+        }
+
+        function closeEditForm() {
+            document.getElementById("edit-user-form").remove();
+        }
+
+        function saveEditUser(button, name, rowIndex) {
+            const email = document.getElementById("edit-user-email").value;
+            const role = document.getElementById("edit-user-role").value;
+            const status = document.getElementById("edit-user-status").value;
+
+            if (!email) {
+                alert("Email cannot be empty.");
+                return;
+            }
+
+            const table = document.getElementById("user-table");
+            const row = table.rows[rowIndex - 1];
+
+            row.children[1].textContent = email;
+            row.children[2].textContent = role;
+            row.children[3].textContent = status;
+
+            row.children[3].className =
+                status === "Active" ? "py-2 px-4 text-green-500" : "py-2 px-4 text-red-500";
+
+            alert(`User "${name}" updated successfully.`);
+            closeEditForm();
+        }
+        function deactivateUser(button) {
+            const row = button.closest("tr");
+            row.children[3].textContent = "Deactivated";
+            row.children[3].className = "py-2 px-4 text-red-500";
+
+            alert(`User "${row.children[0].textContent}" has been deactivated.`);
+        }
+    </script>
+</body>
+</html>
