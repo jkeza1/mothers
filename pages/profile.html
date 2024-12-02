@@ -13,21 +13,82 @@
             <form class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" placeholder="John Doe" class="p-2 border rounded-md w-full" disabled>
+                    <input id="nameInput" type="text" placeholder="John Doe" class="p-2 border rounded-md w-full">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" placeholder="john.doe@example.com" class="p-2 border rounded-md w-full" disabled>
+                    <input id="emailInput" type="email" placeholder="john.doe@example.com" class="p-2 border rounded-md w-full">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Role</label>
-                    <input type="text" placeholder="Admin / Mentor / Single Mother" class="p-2 border rounded-md w-full" disabled>
+                    <label class="block text-sm font-medium text-gray-700">Phone</label>
+                    <input id="phoneInput" type="text" placeholder="+123456789" class="p-2 border rounded-md w-full">
                 </div>
-                <button type="button" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
+                <button id="editButton" type="button" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
                     Edit Profile
+                </button>
+                <button id="saveButton" type="button" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full hidden">
+                    Save Changes
                 </button>
             </form>
         </div>
     </div>
+
+    <script>
+        // DOM elements
+        const nameInput = document.getElementById('nameInput');
+        const emailInput = document.getElementById('emailInput');
+        const phoneInput = document.getElementById('phoneInput');
+        const editButton = document.getElementById('editButton');
+        const saveButton = document.getElementById('saveButton');
+
+        // Role logic
+        const userRole = "admin"; // Replace with actual logic to get the user's role
+
+        // Edit button click
+        editButton.addEventListener('click', () => {
+            // Enable inputs
+            nameInput.disabled = false;
+            emailInput.disabled = false;
+            phoneInput.disabled = false;
+
+            // Show save button and hide edit button
+            saveButton.classList.remove('hidden');
+            editButton.classList.add('hidden');
+        });
+
+        // Save button click
+        saveButton.addEventListener('click', () => {
+            // Validate input
+            if (!nameInput.value.trim() || !emailInput.value.trim() || !phoneInput.value.trim()) {
+                alert('All fields are required!');
+                return;
+            }
+
+            // Disable inputs
+            nameInput.disabled = true;
+            emailInput.disabled = true;
+            phoneInput.disabled = true;
+
+            // Show edit button and hide save button
+            saveButton.classList.add('hidden');
+            editButton.classList.remove('hidden');
+
+            // Determine redirect URL based on role
+            let redirectUrl = "../dashboards/";
+            if (userRole === "admin") {
+                redirectUrl += "admin-dashboard.html";
+            } else if (userRole === "mentor") {
+                redirectUrl += "mentor-dashboard.html";
+            } else if (userRole === "single-mother") {
+                redirectUrl += "single-mother-dashboard.html";
+            }
+
+            // Simulate saving data and redirect
+            alert('Profile updated successfully!');
+            setTimeout(() => {
+                window.location.href = redirectUrl; // Redirect to the appropriate dashboard
+            }, 1000); // Delay to show the alert
+        });
+    </script>
 </body>
 </html>
