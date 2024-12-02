@@ -16,7 +16,6 @@
 
         /* Header Section */
         header {
-            color: white;
             padding: 20px;
             text-align: left;
             margin-left: 270px;
@@ -39,7 +38,6 @@
             display: flex;
             flex-wrap: wrap;
             margin-left: 270px;
-          
         }
 
         .card {
@@ -60,14 +58,14 @@
         .card h2 {
             margin-top: 0;
             font-size: 1.5em;
-            color: GREEN;
+            color: green;
             font-weight: bold;
         }
+
         .card h3 {
             margin-top: 8px;
-            color: GREEN;
+            color: green;
             font-weight: bold;
-    
         }
 
         .card p {
@@ -87,175 +85,225 @@
         }
 
         .card button:hover {
-            background-color: green;
+            background-color: darkgreen;
         }
 
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            margin-top: 20px;
+        .submitted {
+            background-color: gray !important;
+            cursor: not-allowed;
         }
-        .apply{
-            margin-top: 20px;
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.show {
             display: flex;
-            justify-content: space-between;
         }
-        .apply p{
-            color: green;
-            font-weight: bold;
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
         }
-         /* Sidebar Navigation */
-    
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            margin-top: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: darkgreen;
+        }
+
+        .close-modal {
+            background-color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-     <!-- Sidebar Navigation -->
-     <aside class="w-64 bg-gray-800 text-white h-screen fixed flex flex-col justify-between">
-        <div>
-            <div class="p-6">
-                <h2 class="text-2xl font-bold text-green-500">Smeef</h2>
-                <p class="text-sm text-gray-300">Empowering Single Mothers</p>
+    
+         <!-- Sidebar -->
+         <aside class="w-64 bg-gray-800 text-white h-screen fixed flex flex-col justify-between">
+            <div>
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-green-500">Smeef</h2>
+                    <p class="text-sm text-gray-300">Empowering Single Mothers</p>
+                </div>
+                <nav class="mt-6">
+                    <ul>
+                        <li class="p-4 hover:bg-gray-700">
+                            <a href="../pages/motherdashboard.html" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 3a1 1 0 00-1 1v4H5a1 1 0 100 2h4v4a1 1 0 002 0v-4h4a1 1 0 100-2h-4V4a1 1 0 00-1-1z" />
+                                </svg>
+                                <span class="ml-4">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="p-4 hover:bg-gray-700">
+                            <a href="../pages/courses-singlemothers.html" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6z" />
+                                </svg>
+                                <span class="ml-4">Courses</span>
+                            </a>
+                        </li>
+                        <li class="p-4 hover:bg-gray-700">
+                            <a href="#" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M4 3a1 1 0 00-1 1v12a1 1 0 001 1h4.586A2 2 0 0010 17.414L12.414 15H16a1 1 0 001-1V4a1 1 0 00-1-1H4z" />
+                                </svg>
+                                <span class="ml-4">Job Board</span>
+                            </a>
+                        </li>
+                        <li class="p-4 hover:bg-gray-700">
+                            <a href="..//pages/announcements-singlemothers.html" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M18 8a6 6 0 01-12 0 6 6 0 1112 0zm-6 8a8 8 0 100-16 8 8 0 000 16z" />
+                                </svg>
+                                <span class="ml-4">Announcements</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <nav class="mt-6">
+
+            <!-- Profile and Logout -->
+            <div class="mb-6">
                 <ul>
                     <li class="p-4 hover:bg-gray-700">
-                        <a href="single-mother-dashboard.html" class="flex items-center">
+                        <a href="../profile" class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 3a1 1 0 00-1 1v4H5a1 1 0 100 2h4v4a1 1 0 002 0v-4h4a1 1 0 100-2h-4V4a1 1 0 00-1-1z" />
+                                <path d="M10 10a4 4 0 110-8 4 4 0 010 8zM2 18a6 6 0 0112 0H2z" />
                             </svg>
-                            <span class="ml-4">Dashboard</span>
+                            <span class="ml-4">Profile</span>
                         </a>
                     </li>
                     <li class="p-4 hover:bg-gray-700">
-                        <a href="mothercourse.html" class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6z" />
+                        <button onclick="logout()" class="flex items-center w-full text-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H3" />
                             </svg>
-                            <span class="ml-4">Courses</span>
-                        </a>
-                    </li>
-                    <li class="p-4 hover:bg-gray-700">
-                        <a href="motheropportunity.html" class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M4 3a1 1 0 00-1 1v12a1 1 0 001 1h4.586A2 2 0 0010 17.414L12.414 15H16a1 1 0 001-1V4a1 1 0 00-1-1H4z" />
-                            </svg>
-                            <span class="ml-4">Job Board</span>
-                        </a>
-                    </li>
-                    <li class="p-4 hover:bg-gray-700">
-                        <a href="../announcements" class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M18 8a6 6 0 01-12 0 6 6 0 1112 0zm-6 8a8 8 0 100-16 8 8 0 000 16z" />
-                            </svg>
-                            <span class="ml-4">Announcements</span>
-                        </a>
+                            <span class="ml-4">Log Out</span>
+                        </button>
                     </li>
                 </ul>
-            </nav>
-        </div>
-
-        <!-- Profile and Logout -->
-        <div class="mb-6">
-            <ul>
-                <li class="p-4 hover:bg-gray-700">
-                    <a href="../profile" class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10 10a4 4 0 110-8 4 4 0 010 8zM2 18a6 6 0 0112 0H2z" />
-                        </svg>
-                        <span class="ml-4">Profile</span>
-                    </a>
-                </li>
-                <li class="p-4 hover:bg-gray-700">
-                    <button onclick="logout()" class="flex items-center w-full text-left">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H3" />
-                        </svg>
-                        <span class="ml-4">Log Out</span>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </aside>
-
+            </div>
+        </aside>
     <!-- Header Section -->
     <header>
-        <h1>Job board</h1>
-        <p>Discover career, training, and entrepreneurial opportunities to empower your future.</p>
+        <h1>Job Board</h1>
+        <p>Explore job and training opportunities tailored for single mothers.</p>
     </header>
 
     <!-- Main Content -->
-    <div class="container">
-        <!-- Job Opportunities -->
-        <div class="card">
-            <h2>Senior Chef</h2>
-            <h3>UBWIZA restaurant</h3>
-            <p>Ubwiza restaurant is hiring a senionr chef for their cuizine</p>
-            <div class="apply">
-                <p>300k-400k/month</p>
-                
-                <button onclick="alert('You have successfully applied to this job')">APPLY</button>
-            </div>
-        </div>
-        <div class="card">
-            <h2>Senior Chef</h2>
-            <h3>UBWIZA restaurant</h3>
-            <p>Ubwiza restaurant is hiring a senionr chef for their cuizine</p>
-            <div class="apply">
-                <p>300k-400k/month</p>
-                
-                <button onclick="alert('You have successfully applied to this job')">APPLY</button>
-            </div>
-        </div>
-        <div class="card">
-            <h2>Senior Chef</h2>
-            <h3>UBWIZA restaurant</h3>
-            <p>Ubwiza restaurant is hiring a senionr chef for their cuizine</p>
-            <div class="apply">
-                <p>300k-400k/month</p>
-                
-                <button onclick="alert('You have successfully applied to this job')">APPLY</button>
-            </div>
-        </div> 
+    <div class="container" id="job-container">
+        <!-- Job listings generated dynamically -->
     </div>
-    <div class="container">
-        <!-- Job Opportunities -->
-        <div class="card">
-            <h2>Senior Chef</h2>
-            <h3>UBWIZA restaurant</h3>
-            <p>Ubwiza restaurant is hiring a senionr chef for their cuizine</p>
-            <div class="apply">
-                <p>300k-400k/month</p>
-                
-                <button onclick="alert('You have successfully applied to this job')">APPLY</button>
-            </div>
+
+    <!-- Modal -->
+    <div id="application-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="job-title"></h2>
+            <form>
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <input type="file" id="cv" required>
+                <textarea id="cover-letter" placeholder="Cover Letter" rows="4" required></textarea>
+                <button type="button" onclick="submitApplication()">Submit</button>
+                <button type="button" class="close-modal" onclick="closeApplicationForm()">Cancel</button>
+            </form>
         </div>
-        <div class="card">
-            <h2>Senior Chef</h2>
-            <h3>UBWIZA restaurant</h3>
-            <p>Ubwiza restaurant is hiring a senionr chef for their cuizine</p>
-            <div class="apply">
-                <p>300k-400k/month</p>
-                
-                <button onclick="alert('You have successfully applied to this job')">APPLY</button>
-            </div>
-        </div>
-        <div class="card">
-            <h2>Senior Chef</h2>
-            <h3>UBWIZA restaurant</h3>
-            <p>Ubwiza restaurant is hiring a senionr chef for their cuizine</p>
-            <div class="apply">
-                <p>300k-400k/month</p>
-                
-                <button onclick="alert('You have successfully applied to this job')">APPLY</button>
-            </div>
-        </div> 
     </div>
-    
 
-    <!-- Footer Section -->
- 
+    <script>
+        const jobs = [
+            { title: "Senior Chef", company: "UBWIZA Restaurant", description: "Lead our culinary team.", salary: "300k-400k/month" },
+            { title: "Digital Marketer", company: "Kigali Marketing Hub", description: "Enhance our online presence.", salary: "200k-300k/month" },
+            { title: "Tailoring Trainer", company: "Skill Builders", description: "Train young women in tailoring.", salary: "150k-200k/month" },
+            { title: "Childcare Specialist", company: "Little Ones", description: "Provide care for children.", salary: "100k-150k/month" }
+        ];
 
+        const appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
+
+        function renderJobs() {
+            const container = document.getElementById("job-container");
+            container.innerHTML = jobs
+                .map((job, index) => `
+                    <div class="card">
+                        <h2>${job.title}</h2>
+                        <h3>${job.company}</h3>
+                        <p>${job.description}</p>
+                        <div class="apply">
+                            <p>${job.salary}</p>
+                            <button class="${appliedJobs.includes(index) ? "submitted" : ""}" 
+                                ${appliedJobs.includes(index) ? "disabled" : `onclick="openApplicationForm(${index})"`}>
+                                ${appliedJobs.includes(index) ? "Submitted" : "Apply"}
+                            </button>
+                        </div>
+                    </div>
+                `)
+                .join("");
+        }
+
+        function openApplicationForm(index) {
+            const job = jobs[index];
+            document.getElementById("job-title").textContent = `${job.title} at ${job.company}`;
+            document.getElementById("application-modal").setAttribute("data-index", index);
+            document.getElementById("application-modal").classList.add("show");
+        }
+
+        function closeApplicationForm() {
+            document.getElementById("application-modal").classList.remove("show");
+        }
+
+        function submitApplication() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const cv = document.getElementById("cv").files[0];
+            const coverLetter = document.getElementById("cover-letter").value;
+
+            if (name && email && cv && coverLetter) {
+                const index = document.getElementById("application-modal").getAttribute("data-index");
+                appliedJobs.push(parseInt(index));
+                localStorage.setItem("appliedJobs", JSON.stringify(appliedJobs));
+                alert("Application submitted successfully!");
+                closeApplicationForm();
+                renderJobs();
+            } else {
+                alert("Please fill all fields.");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", renderJobs);
+    </script>
 </body>
 </html>

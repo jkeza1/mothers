@@ -5,11 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Announcements</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            background: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background: darkgreen;
+        }
+
+        .close-modal {
+            background: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="flex">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-gray-800 text-white h-screen fixed">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white h-screen fixed flex flex-col justify-between">
+        <div>
             <div class="p-6">
                 <h2 class="text-2xl font-bold text-green-500">Smeef</h2>
                 <p class="text-sm text-gray-300">Empowering Single Mothers</p>
@@ -17,9 +73,9 @@
             <nav class="mt-6">
                 <ul>
                     <li class="p-4 hover:bg-gray-700">
-                        <a href="../dashboard.html" class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        <a href="../pages/motherdashboard.html" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 3a1 1 0 00-1 1v4H5a1 1 0 100 2h4v4a1 1 0 002 0v-4h4a1 1 0 100-2h-4V4a1 1 0 00-1-1z" />
                             </svg>
                             <span class="ml-4">Dashboard</span>
                         </a>
@@ -41,7 +97,7 @@
                         </a>
                     </li>
                     <li class="p-4 hover:bg-gray-700">
-                        <a href="../pages/announcements-singlemothers.html" class="flex items-center">
+                        <a href="#" class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M18 8a6 6 0 01-12 0 6 6 0 1112 0zm-6 8a8 8 0 100-16 8 8 0 000 16z" />
                             </svg>
@@ -50,7 +106,30 @@
                     </li>
                 </ul>
             </nav>
-        </aside>
+        </div>
+
+        <!-- Profile and Logout -->
+        <div class="mb-6">
+            <ul>
+                <li class="p-4 hover:bg-gray-700">
+                    <a href="../pages/profile.html" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 10a4 4 0 110-8 4 4 0 010 8zM2 18a6 6 0 0112 0H2z" />
+                        </svg>
+                        <span class="ml-4">Profile</span>
+                    </a>
+                </li>
+                <li class="p-4 hover:bg-gray-700">
+                    <button onclick="logout()" class="flex items-center w-full text-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H3" />
+                        </svg>
+                        <span class="ml-4">Log Out</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </aside>
         
         <!-- Main Content -->
         <main class="ml-64 p-8">
@@ -60,16 +139,17 @@
             </header>
             
             <!-- Announcements Section -->
+             <!-- Important Announcements -->
             <div class="space-y-6">
-                <!-- Important Announcements -->
-                <div>
-                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Important Updates</h2>
-                    <div class="p-4 bg-red-100 border-l-4 border-red-500 rounded-md shadow">
-                        <h3 class="text-lg font-bold text-red-700">Platform Maintenance</h3>
-                        <p class="text-gray-700">Scheduled maintenance on Dec 1, 2024, from 2:00 AM to 4:00 AM. The platform may be unavailable during this time.</p>
-                        <button onclick="markAsRead('maintenance')" class="mt-2 text-red-600 hover:underline">Mark as Read</button>
-                    </div>
-                </div>
+<div>
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Important Updates</h2>
+    <div id="announcement-maintenance" class="p-4 bg-red-100 border-l-4 border-red-500 rounded-md shadow">
+        <h3 class="text-lg font-bold text-red-700">Platform Maintenance</h3>
+        <p class="text-gray-700">Scheduled maintenance on Dec 1, 2024, from 2:00 AM to 4:00 AM. The platform may be unavailable during this time.</p>
+        <button onclick="markAsRead('maintenance')" class="mt-2 text-red-600 hover:underline">Mark as Read</button>
+    </div>
+</div>
+
                 
                 <!-- General Announcements -->
                 <div>
@@ -82,7 +162,7 @@
                         <div class="p-4 bg-white rounded-md shadow">
                             <h3 class="text-lg font-bold text-gray-800">Upcoming Webinar</h3>
                             <p class="text-gray-700">Join our free webinar on "How to Start Your Own Business" on Dec 5, 2024.</p>
-                            <button onclick="registerForEvent('webinar')" class="mt-2 text-green-500 hover:underline">Register Now</button>
+                            <button onclick="showRegisterModal()" class="mt-2 text-green-500 hover:underline">Register Now</button>
                         </div>
                         <div class="p-4 bg-white rounded-md shadow">
                             <h3 class="text-lg font-bold text-gray-800">Course Discount</h3>
@@ -98,12 +178,12 @@
                         <div class="p-4 bg-white rounded-md shadow">
                             <h3 class="text-lg font-bold text-gray-800">Networking Event</h3>
                             <p class="text-gray-700">Meet industry experts and expand your network on Dec 12, 2024, at Kigali Convention Center.</p>
-                            <button onclick="learnMore('networking-event')" class="mt-2 text-green-500 hover:underline">Learn More</button>
+                            <button onclick="showReadMoreModal()" class="mt-2 text-green-500 hover:underline">Read More</button>
                         </div>
                         <div class="p-4 bg-white rounded-md shadow">
                             <h3 class="text-lg font-bold text-gray-800">Health & Wellness Workshop</h3>
                             <p class="text-gray-700">Join our interactive session on maintaining work-life balance on Dec 8, 2024.</p>
-                            <button onclick="reserveSpot('wellness-workshop')" class="mt-2 text-green-500 hover:underline">Reserve Spot</button>
+                            <button onclick="reserveSpot()" class="mt-2 text-green-500 hover:underline">Reserve Spot</button>
                         </div>
                     </div>
                 </div>
@@ -111,23 +191,94 @@
         </main>
     </div>
 
-    <!-- JavaScript for Dynamic Content -->
+    <!-- Modals -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <h2>Register for Webinar</h2>
+            <input type="text" id="webinar-name" placeholder="Your Name" required>
+            <input type="email" id="webinar-email" placeholder="Your Email" required>
+            <button onclick="submitRegistration()">Submit</button>
+            <button class="close-modal" onclick="closeModal('register-modal')">Cancel</button>
+        </div>
+    </div>
+
+    <div id="readmore-modal" class="modal">
+        <div class="modal-content">
+            <h2>Networking Event Details</h2>
+            <p>Join industry experts at Kigali Convention Center on Dec 12, 2024, for an engaging networking event to connect with like-minded professionals.</p>
+            <button class="close-modal" onclick="closeModal('readmore-modal')">Close</button>
+        </div>
+    </div>
+
+    <div id="reserve-modal" class="modal">
+        <div class="modal-content">
+            <h2>Reserve Your Spot</h2>
+            <input type="text" id="reserve-name" placeholder="Your Name" required>
+            <input type="email" id="reserve-email" placeholder="Your Email" required>
+            <button onclick="submitReservation()">Reserve</button>
+            <button class="close-modal" onclick="closeModal('reserve-modal')">Cancel</button>
+        </div>
+    </div>
+
     <script>
-        function markAsRead(announcementId) {
-            alert(`Marked announcement "${announcementId}" as read!`);
+        function showRegisterModal() {
+            document.getElementById('register-modal').classList.add('show');
         }
 
-        function registerForEvent(eventId) {
-            alert(`Registered for event "${eventId}"!`);
+        function showReadMoreModal() {
+            document.getElementById('readmore-modal').classList.add('show');
         }
 
-        function learnMore(eventId) {
-            alert(`Learn more about "${eventId}"!`);
+        function reserveSpot() {
+            document.getElementById('reserve-modal').classList.add('show');
         }
 
-        function reserveSpot(eventId) {
-            alert(`Reserved spot for "${eventId}"!`);
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
         }
+
+        function submitRegistration() {
+            const name = document.getElementById('webinar-name').value;
+            const email = document.getElementById('webinar-email').value;
+            if (name && email) {
+                alert(`Thank you, ${name}! You are registered for the webinar.`);
+                closeModal('register-modal');
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function submitReservation() {
+            const name = document.getElementById('reserve-name').value;
+            const email = document.getElementById('reserve-email').value;
+            if (name && email) {
+                alert(`Thank you, ${name}! Your spot has been reserved.`);
+                closeModal('reserve-modal');
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+         // Check and update the read status on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        const isRead = localStorage.getItem("announcement-maintenance-read");
+        if (isRead === "true") {
+            markAsRead("maintenance", true);
+        }
+    });
+
+    // Mark the announcement as read  function markAsRead(announcementId) {
+        // Get the announcement element by its ID
+        const announcement = document.getElementById(announcementId);
+        if (announcement) {
+            // Change the background color and remove the button
+            announcement.style.backgroundColor = '#e5e7eb'; // Grey background
+            announcement.style.borderLeftColor = '#9ca3af'; // Grey border
+            const button = announcement.querySelector('button');
+            if (button) {
+                button.remove();
+            }
+        }
+    
     </script>
 </body>
 </html>
